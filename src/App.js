@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 
-function App() {
+function StarWarsVehicles() {
+  const [vehicles, setVehicles] = useState([]);
+
+  useEffect(() => {
+    fetch('https://swapi.dev/api/vehicles/')
+      .then(response => response.json())
+      .then(data => setVehicles(data.results))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Star Wars Vehicles</h1>
+      <ul>
+        {vehicles.map((vehicle, index) => (
+          <li key={index}>{vehicle.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default App;
+export default StarWarsVehicles;
